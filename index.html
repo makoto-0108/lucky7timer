@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Lucky7タイマー</title>
 <style>
+  :root {
+    --orange-main: #ff7f50; /* コーラルオレンジ */
+    --orange-dark: #e76f2a; /* 濃いオレンジ */
+  }
   body {
     font-family: sans-serif;
     text-align: center;
@@ -11,28 +15,39 @@
     background: #fdfcf8;
   }
   h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
+    font-size: 5em;
+    margin-bottom: 30px;
+    color: var(--orange-main);
   }
   .time {
-    font-size: 5em;
+    font-size: 4em;
     margin: 20px 0;
+    color: #222;
   }
   .status {
     font-size: 1.5em;
     margin-bottom: 20px;
+    color: #555;
   }
   button {
     font-size: 1.2em;
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--orange-main);
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: var(--orange-dark);
   }
 </style>
 </head>
 <body>
 
-<h1>Lucky7 ⏱️</h1>
+<h1>Lucky7</h1>
 <div class="status">▶️ うごく</div>
 <div class="time">05:00</div>
 <button id="startBtn">スタート</button>
