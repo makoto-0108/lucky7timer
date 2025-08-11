@@ -11,8 +11,20 @@
   body {
     font-family: sans-serif;
     text-align: center;
-    padding-top: 50px;
+    padding: 30px 20px 50px;
     background: #fdfcf8;
+  }
+  .description {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    font-size: 1.1em;
+    color: #444;
+    line-height: 1.6;
+    background: #fff3e0;
+    border: 1px solid var(--orange-main);
+    border-radius: 8px;
+    padding: 20px 25px;
+    box-shadow: 0 2px 6px rgba(255,127,80,0.3);
   }
   h1 {
     font-size: 5em;
@@ -66,6 +78,19 @@
 </head>
 <body>
 
+<div class="description">
+  Lucky7タイマーへようこそ！<br><br>
+  このタイマーは「5分作業して2分休憩」のリズムで、集中力と休息のバランスを整えるためのシンプルなツールです。<br><br>
+  ・画面の「スタート」ボタンでタイマーが動き始めます。<br>
+  ・作業時間は5分、休憩時間は2分を自動で交互に切り替えます。<br>
+  ・音のON/OFFは「🔔 音あり」ボタンで切り替え可能です。<br>
+  ・合計稼働時間も表示して、今日の頑張りを見える化できます。<br>
+  ・「リセット」ボタンでタイマーを最初の状態に戻せます。<br>
+  ・「合計リセット」ボタンで合計時間をゼロにリセットできます。<br><br>
+  眠い時やモチベーションが低い時にも使いやすいよう、シンプルで温かみのあるデザインにしました。<br>
+  ぜひ毎日のリズムづくりに活用してくださいね。応援しています！🔥🐾
+</div>
+
 <h1>Lucky7</h1>
 <div class="status">▶️ うごく</div>
 <div class="time">05:00</div>
@@ -82,7 +107,6 @@ let timerId = null;
 let soundOn = true;
 
 let totalSeconds = 0; // 合計稼働秒数
-let totalTimerId = null;
 
 const statusEl = document.querySelector('.status');
 const timeEl = document.querySelector('.time');
