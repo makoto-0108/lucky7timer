@@ -92,6 +92,24 @@
   #resetTotalBtn:hover {
     background-color: #666;
   }
+
+  /* ここから進捗バー用 */
+  .progress-bar {
+    width: 100%;
+    max-width: 600px;
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px auto 30px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .progress {
+    height: 100%;
+    background: var(--orange-main);
+    width: 100%; /* JSで変える */
+    transition: width 1s linear;
+  }
 </style>
 </head>
 <body>
@@ -113,6 +131,12 @@
 <h1>Lucky7</h1>
 <div class="status">▶️ うごく</div>
 <div class="time">05:00</div>
+
+<!-- ここが新規追加の進捗バー -->
+<div class="progress-bar" aria-label="タイマーの進行状況" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+  <div class="progress"></div>
+</div>
+
 <div class="total-time">合計稼働時間：00:00</div>
 <button id="startBtn">スタート</button>
 <button id="resetBtn">リセット</button>
@@ -134,6 +158,8 @@ const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const soundToggleBtn = document.getElementById('soundToggleBtn');
 const resetTotalBtn = document.getElementById('resetTotalBtn');
+const progressEl = document.querySelector('.progress');
+const progressBar = document.querySelector('.progress-bar');
 
 const description = document.getElementById('description');
 const closeDescBtn = document.getElementById('closeDescBtn');
@@ -147,6 +173,14 @@ function formatTime(seconds) {
 function updateDisplay() {
   timeEl.textContent = formatTime(timeLeft);
   totalTimeEl.textContent = `合計稼働時間：${formatTime(totalSeconds)}`;
+
+  // 進捗バー更新
+  const totalTime = isWork ? 5 * 60 : 2 * 60;
+  const progressPercent = (timeLeft / totalTime) * 100;
+  progressEl.style.width = `${progressPercent}%`;
+
+  // ARIA属性も更新（アクセシビリティ用）
+  progressBar.setAttribute('aria-valuenow', Math.round(progressPercent));
 }
 
 function playBell(frequency) {
