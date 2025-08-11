@@ -15,6 +15,7 @@
     background: #fdfcf8;
   }
   .description {
+    position: relative;
     max-width: 600px;
     margin: 0 auto 40px;
     font-size: 1.1em;
@@ -25,6 +26,21 @@
     border-radius: 8px;
     padding: 20px 25px;
     box-shadow: 0 2px 6px rgba(255,127,80,0.3);
+  }
+  #closeDescBtn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+  }
+  #closeDescBtn:hover {
+    color: var(--orange-dark);
   }
   h1 {
     font-size: 5em;
@@ -78,7 +94,8 @@
 </head>
 <body>
 
-<div class="description">
+<div class="description" id="description">
+  <button id="closeDescBtn" aria-label="説明を閉じる">×</button>
   Lucky7タイマーへようこそ！<br><br>
   このタイマーは「5分作業して2分休憩」のリズムで、集中力と休息のバランスを整えるためのシンプルなツールです。<br><br>
   ・画面の「スタート」ボタンでタイマーが動き始めます。<br>
@@ -115,6 +132,9 @@ const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const soundToggleBtn = document.getElementById('soundToggleBtn');
 const resetTotalBtn = document.getElementById('resetTotalBtn');
+
+const description = document.getElementById('description');
+const closeDescBtn = document.getElementById('closeDescBtn');
 
 function formatTime(seconds) {
   const m = String(Math.floor(seconds / 60)).padStart(2, '0');
@@ -198,6 +218,10 @@ soundToggleBtn.addEventListener('click', () => {
 resetTotalBtn.addEventListener('click', () => {
   totalSeconds = 0;
   updateDisplay();
+});
+
+closeDescBtn.addEventListener('click', () => {
+  description.style.display = 'none';
 });
 
 updateDisplay();
