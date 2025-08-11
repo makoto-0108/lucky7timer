@@ -5,8 +5,8 @@
 <title>Lucky7タイマー</title>
 <style>
   :root {
-    --orange-main: #ff7f50; /* コーラルオレンジ */
-    --orange-dark: #e76f2a; /* 濃いオレンジ */
+    --orange-main: #ff7f50;
+    --orange-dark: #e76f2a;
   }
   body {
     font-family: sans-serif;
@@ -16,18 +16,23 @@
   }
   h1 {
     font-size: 5em;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: var(--orange-main);
   }
   .time {
     font-size: 4em;
-    margin: 20px 0;
+    margin: 10px 0;
     color: #222;
   }
   .status {
     font-size: 1.5em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #555;
+  }
+  .total-time {
+    font-size: 1.2em;
+    margin: 15px 0 30px 0;
+    color: #333;
   }
   button {
     font-size: 1.2em;
@@ -50,6 +55,13 @@
   #soundToggleBtn:hover {
     background-color: #888;
   }
+  #resetTotalBtn {
+    background-color: #888;
+    color: white;
+  }
+  #resetTotalBtn:hover {
+    background-color: #666;
+  }
 </style>
 </head>
 <body>
@@ -57,26 +69,38 @@
 <h1>Lucky7</h1>
 <div class="status">▶️ うごく</div>
 <div class="time">05:00</div>
+<div class="total-time">合計稼働時間：00:00</div>
 <button id="startBtn">スタート</button>
 <button id="resetBtn">リセット</button>
 <button id="soundToggleBtn">🔔 音あり</button>
+<button id="resetTotalBtn">合計リセット</button>
 
 <script>
-let isWork = true; // true=作業, false=休憩
-let timeLeft = 5 * 60; // 秒
+let isWork = true;
+let timeLeft = 5 * 60;
 let timerId = null;
 let soundOn = true;
 
+let totalSeconds = 0; // 合計稼働秒数
+let totalTimerId = null;
+
 const statusEl = document.querySelector('.status');
 const timeEl = document.querySelector('.time');
+const totalTimeEl = document.querySelector('.total-time');
 const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const soundToggleBtn = document.getElementById('soundToggleBtn');
+const resetTotalBtn = document.getElementById('resetTotalBtn');
+
+function formatTime(seconds) {
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
 
 function updateDisplay() {
-  let m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-  let s = String(timeLeft % 60).padStart(2, '0');
-  timeEl.textContent = `${m}:${s}`;
+  timeEl.textContent = formatTime(timeLeft);
+  totalTimeEl.textContent = `合計稼働時間：${formatTime(totalSeconds)}`;
 }
 
 function playBell(frequency) {
@@ -114,6 +138,7 @@ function switchMode() {
 function tick() {
   if (timeLeft > 0) {
     timeLeft--;
+    totalSeconds++;
     updateDisplay();
   } else {
     switchMode();
@@ -144,6 +169,11 @@ resetBtn.addEventListener('click', () => {
 soundToggleBtn.addEventListener('click', () => {
   soundOn = !soundOn;
   soundToggleBtn.textContent = soundOn ? '🔔 音あり' : '🔕 音なし';
+});
+
+resetTotalBtn.addEventListener('click', () => {
+  totalSeconds = 0;
+  updateDisplay();
 });
 
 updateDisplay();
